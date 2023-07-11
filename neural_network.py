@@ -1,15 +1,28 @@
 import math
 from matrix import Matrix
 
-# sigmoid function
+# Activation Functions
+'''
+    Note: This sigmoid function takes as input any real value and outputs values ​​in the range 0 to 1.
+'''
 def sigmoid(x, i, j):
     return 1 / (1 + math.exp(-x))
 
+'''
+    Note: This function derives the sigmoid function
+'''
 def dsigmoid(x, i, j):
     return x * (1 - x)
 
-class NeuralNetwork:
 
+# Neural network class
+class NeuralNetwork:
+    '''
+        Node: When instantiated the constructor will have layers with such numbers of nodes. 
+        This constructor initializes with random numbers for neural network.
+        
+        Obs.: Soon I will implement a "memory"
+    '''
     def __init__(self, i_nodes, h_nodes, o_nodes) -> None:
         # Quantity nodes(neurons- i, h, o)
         self.i_nodes = i_nodes
@@ -31,25 +44,29 @@ class NeuralNetwork:
         # Weight [Hide to output]
         self.weights_ho = Matrix(self.o_nodes, self.h_nodes)
         self.weights_ho.randomize()
-
+        
+        # Learning rate
         self.learning_rate = 0.1
 
-
+    # Train Method
+    '''
+        Note: This method will train the neural network and after reaching the expected value it stops.
+        in this method the backpropagation is working
+    '''
     def train(self, arr, target):                                                                                                    
-        # Input -> Hidden
+        # INPUT -> HIDDEN
         input = Matrix.array_to_matrix(arr)
         hidden = Matrix.multiply(self.weights_ih, input)        
         hidden = Matrix.add(hidden, self.bias_ih)
         hidden.map(sigmoid)
 
-        # hidden -> output
+        # HIDDEN -> OUTPUT
         output = Matrix.multiply(self.weights_ho, hidden)
         output.add(output, self.bias_ho)
         output.map(sigmoid)
 
-        # backpropagation
-
-        # hidden -> output
+        # BACKPROPAGATION
+        # OUTPUT -> HIDDEN
         expected = Matrix.array_to_matrix(target)
         output_error = Matrix.subtract(expected, output)
         d_output = Matrix.Map(output, dsigmoid)
@@ -65,7 +82,7 @@ class NeuralNetwork:
         weight_ho_delta = Matrix.multiply(gradient, hidden_t)
         self.weights_ho = Matrix.add(self.weights_ho, weight_ho_delta)
        
-        # Input -> Hidden
+        # HIDDEN -> INPUT
         weight_ho_t = Matrix.transpose(self.weights_ho)
         hidden_error = Matrix.multiply(weight_ho_t, output_error)
         d_hidden = Matrix.Map(hidden, dsigmoid)
@@ -78,23 +95,29 @@ class NeuralNetwork:
         
         # Ajust bias_ho
         self.bias_ih = Matrix.add(self.bias_ih, gradient_h)
-
+    
         weight_ih_delta = Matrix.multiply(gradient_h, input_t)
         self.weights_ih = Matrix.add(self.weights_ih, weight_ih_delta)
 
+    # Predicit Method
+    '''
+        Note: After training the network will return a value to the prompt, predict will do the classification process after training.
 
+        Obs.: After implementing data persistence, as soon as the results are achieved, predict will load the values
+    '''
     def predict(self, arr):
-        # Input -> Hidden
+        # INPUT -> HIDDEN
         input = Matrix.array_to_matrix(arr)
         hidden = Matrix.multiply(self.weights_ih, input)        
         hidden = Matrix.add(hidden, self.bias_ih)
         hidden.map(sigmoid)
 
-        # hidden -> output
+        # HIDDEN -> OUTPUT
         output = Matrix.multiply(self.weights_ho, hidden)
         output.add(output, self.bias_ho)
         output.map(sigmoid)
 
         output = Matrix.matrix_to_array(output)
-
+        
+        # OUTPUT
         return output
