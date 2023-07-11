@@ -29,7 +29,8 @@ Usage is basically starting `main.py`:
     $ python3 main.py
 ```
 
-Example:
+#### Example:
+
 ![Example](./sources/example.gif)
 
 ## Roadmap
