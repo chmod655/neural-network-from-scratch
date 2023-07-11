@@ -30,11 +30,12 @@ Usage is basically starting `main.py`:
 ```
 
 #### Example:
-
-![Example](./sources/example.gif)
+![Example][def]
 
 ## Roadmap
 > I believe that for the last addition I will go for data persistence for the neural network and some simple changes
 
 ## License
 [MIT](https://github.com/chmod655/neural-network-non-worked/blob/main/LICENSE)
+
+[def]: ./sources/example.gif
