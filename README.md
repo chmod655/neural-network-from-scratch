@@ -30,7 +30,7 @@ Usage is basically starting `main.py`:
 ```
 
 Example:
-![Example](./resource/example.gif)
+![Example](./sources/example.gif)
 
 ## Roadmap
 > I believe that for the last addition I will go for data persistence for the neural network and some simple changes
