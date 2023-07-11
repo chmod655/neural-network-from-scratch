@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     while True:
         string = f'''
-           = [0] - Exit
+           = [55] - Exit
            x [1] - Prompt
            = [2] - Train NN
            x {'='*20}
@@ -43,7 +43,7 @@ if __name__ == '__main__':
             user = int(input('INSERT[0, 1]: '))
             if user == 1:
                 print('OUTPUT[1]: ', ntk.predict([1,0]))  
-            else: print('OUTPUT[0]: ', ntk.predict([0,0]))            
+            elif user == 0: print('OUTPUT[0]: ', ntk.predict([0,0]))            
         if user == 2:
             steps = int(input('TRAIN STEPS[10, 100]: '))
             while steps:
@@ -51,4 +51,4 @@ if __name__ == '__main__':
                 train = True
                 steps -= 1
 
-        if user == 0: break
+        if user == 55: break
